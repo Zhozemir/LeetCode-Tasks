@@ -1,32 +1,40 @@
 #include <iostream>
-#include <unordered_map>
+#include <string>
 #include <queue>
+#include <unordered_map>
 
-std::string frequencySort(std::string s) {
+struct CompareByValue {
+
+	bool operator()(const std::pair<char, int>& a, const std::pair<char, int>& b) const {
+	
+		return a.second < b.second;
+	
+	}
+
+};
+
+std::string frequencySort(std::string s){
 
 	std::unordered_map<char, int> hm;
 
-	std::priority_queue<std::pair<int , char>> pq;
-
-	for (const auto& el : s)	
+	for (const auto& el : s)
 		hm[el]++;
 
+	std::priority_queue<std::pair<char, int>, std::vector<std::pair<char, int>>, CompareByValue> pq;
+
 	for (const auto& pair : hm)
-		pq.push({pair.second, pair.first});
-	
-	std::string newStr;
+		pq.push(pair);
+
+	std::string result = "";
 
 	while (!pq.empty()) {
 	
-		auto currentPair = pq.top();
+		auto top = pq.top();
 
-		int count = currentPair.first;
-		char ch = currentPair.second;
-
-		while (count != 0) {
+		while (top.second != 0) {
 		
-			newStr.push_back(ch);
-			count--;
+			result += pq.top().first;
+			top.second--;
 		
 		}
 
@@ -34,60 +42,8 @@ std::string frequencySort(std::string s) {
 	
 	}
 
-	return newStr;
+	return result;
 
 }
 
-//struct CompareBySecond {
-//
-//	bool operator()(const std::pair<char, int>& a, const std::pair<char, int>& b) {
-//
-//		return a.second < b.second;
-//
-//	}
-//
-//};
-//
-//std::string frequencySort(std::string s) {
-//
-//	std::unordered_map<char, int> hm;
-//
-//	std::priority_queue<std::pair<char, int>, std::vector<std::pair<char, int>>, CompareBySecond> pq;
-//
-//	for (const auto& el : s)
-//		hm[el]++;
-//
-//	for (const auto& pair : hm)
-//		pq.push({ pair.first, pair.second });
-//
-//	std::string newStr;
-//
-//	while (!pq.empty()) {
-//
-//		auto currentPair = pq.top();
-//
-//		int count = currentPair.second;
-//		char ch = currentPair.first;
-//
-//		while (count != 0) {
-//
-//			newStr.push_back(ch);
-//			count--;
-//
-//		}
-//
-//		pq.pop();
-//
-//	}
-//
-//	return newStr;
-//
-//}
 
-int main() {
-
-	std::string s = "Aabb";
-
-	std::cout << frequencySort(s);
-
-}
