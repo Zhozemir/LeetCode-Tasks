@@ -1,5 +1,3 @@
-package com.example.springDemo;
-
 public class LongestNiceSubarray {
 
     public int longestNiceSubarray(int[] nums) {
