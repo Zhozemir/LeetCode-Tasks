@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+
 public class CountDaysWithoutMeetings {
 
     public static int countDays(int days, int[][] meetings){
